@@ -10,4 +10,5 @@ then `chmod u+x install-vimplug-scripts.sh`
 `./install-vimplug-scripts.sh`
 
 ## if error  
+check command `cd vim-plug-install` is in ??
 https://www.youtube.com/watch?v=QB9V__3VO2s&t=130s
