@@ -35,4 +35,8 @@ cd ~/vim-plug-install
 cp plugins.vim ~/.config/nvim/vim-plug/plugins.vim
 cp init.vim ~/.config/nvim/init.vim
 
+cd
+
+source .config/nvim/vim-plug/plugins.vim
+
 echo "after all open -> https://www.chrisatmachine.com/Neovim/01-vim-plug/"
