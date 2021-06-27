@@ -30,7 +30,7 @@ touch ~/.config/nvim/vim-plug/plugins.vim
 
 cd
 
-cd ~/vim-plug-install
+cd ~/setUp/vim-plug-install
 
 cp plugins.vim ~/.config/nvim/vim-plug/plugins.vim
 cp init.vim ~/.config/nvim/init.vim
