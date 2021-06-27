@@ -1,7 +1,7 @@
 # vim-plug-install
 script to install neovim plugin in arch linux, manjaro, garuda    
-this scipt hasn't been test :vvvv
-
+this scipt hasn't been test :vvvv   
+link https://www.chrisatmachine.com/Neovim/01-vim-plug/
 ## clone to local
 open terminal `git clone https://github.com/falcol/vim-plug-install.git`     
 ## set up sh
