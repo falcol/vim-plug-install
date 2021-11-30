@@ -39,7 +39,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}  "syntax highlight
+Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
 call plug#end()
 
 " path to your python
@@ -262,6 +262,7 @@ function MyCustomHighlights()
     sign define semshiError text=E> texthl=semshiErrorSign
 endfunction
 autocmd FileType * call MyCustomHighlights()
+let g:semshi#filetypes	= ['python']
 
 "pylint
 let g:ale_python_pylint_options = '--load-plugins pylint_Django'
