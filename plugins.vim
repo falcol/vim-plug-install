@@ -52,6 +52,13 @@ set fileformat=unix
 set shortmess+=c
 
 set number  " always show current line number
+" Highlight cursor line underneath the cursor horizontally.
+set cursorline
+" Highlight cursor line underneath the cursor vertically.
+set cursorcolumn
+set incsearch
+set hlsearch
+
 set relativenumber
 set expandtab
 set tabstop=4
@@ -140,7 +147,7 @@ colorscheme tokyonight
 set background=dark
 
 set completeopt+=menuone   " show the popup menu even when there is only 1 match
-set completeopt+=noinsert  " don't insert any text until user chooses a match
+set completeopt+=noinsert  " don't insert any tet until user chooses a match
 set completeopt-=longest   " don't insert the longest common text
 set completeopt+=preview
 
@@ -266,4 +273,3 @@ let g:semshi#filetypes	= ['python']
 
 "pylint
 let g:ale_python_pylint_options = '--load-plugins pylint_Django'
-
