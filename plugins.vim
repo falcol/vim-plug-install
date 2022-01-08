@@ -30,7 +30,6 @@ Plug 'itchyny/vim-gitbranch' " branch name for status line
 Plug 'jiangmiao/auto-pairs'
 Plug 'bling/vim-bufferline'
 Plug 'ghifarit53/tokyonight-vim' "tokyonight
-" Plug 'NLKNguyen/papercolor-theme' "papercolor
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Yggdroot/indentLine'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -40,6 +39,11 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
+Plug 'frazrepo/vim-rainbow'
+Plug 'andviro/flake8-vim'
+Plug 'dense-analysis/ale'
+Plug 'sheerun/vim-polyglot'
+Plug 'navarasu/onedark.nvim'
 call plug#end()
 
 " path to your python
@@ -133,18 +137,19 @@ let g:lightline = {
       \   'cocstatus': 'coc#status'
       \ },
       \ }
-" let g:lightline.colorscheme='onehalfdark'
-let g:lightline.colorscheme='tokyonight'
+let g:lightline.colorscheme='tokyonight' "'tokyonight'
 " Theme set
 let g:tokyonight_italicize_strings=1
 let g:tokyonight_contrast_dark='hard'
 let g:tokyonight_enable_italic=1
 let g:tokyonight_enable_bold=1
+let g:airline_theme='onedark'
+let g:onedark_termcolors=256
 " let g:tokyonight_style = 'night'
-colorscheme tokyonight
-" colorscheme onehalflight
-" colorscheme onehalfdark
-set background=dark
+let g:onedark_style = 'deep'
+let g:onedark_italic_comment=v:true
+colorscheme onedark
+set background=light
 
 set completeopt+=menuone   " show the popup menu even when there is only 1 match
 set completeopt+=noinsert  " don't insert any tet until user chooses a match
@@ -272,4 +277,88 @@ autocmd FileType * call MyCustomHighlights()
 let g:semshi#filetypes	= ['python']
 
 "pylint
-let g:ale_python_pylint_options = '--load-plugins pylint_Django'
+let g:ale_python_pylint_options = "--init-hook='import sys; sys.path.append(\".\")'"
+let g:neomake_python_pylint_maker = {
+  \ 'args': [
+  \ '-d', 'C0103, C0111',
+  \ '-f', 'text',
+  \ '--msg-template="{path}:{line}:{column}:{C}: [{symbol}] {msg}"',
+  \ '-r', 'n'
+  \ ],
+  \ 'errorformat':
+  \ '%A%f:%l:%c:%t: %m,' .
+  \ '%A%f:%l: %m,' .
+  \ '%A%f:(%l): %m,' .
+  \ '%-Z%p^%.%#,' .
+  \ '%-G%.%#',
+  \ }
+
+let g:neomake_python_enabled_makers = ['flake8', 'pylint']
+let g:ale_python_pylint_change_directory=1
+let g:ale_python_flake8_change_directory=1
+let g:ale_python_pylint_executable = 'yapf'
+let g:ale_lint_on_enter = 1
+let g:ale_lint_dirs = {
+            \    'pylint': getcwd()
+            \}
+
+" For local replace
+nnoremap gr gd[{V%::s/<C-R>///gc<left><left><left>
+
+" For global replace
+nnoremap gR gD:%s/<C-R>///gc<left><left><left>
+
+" vim rainbow
+let g:rainbow_active = 1
+let g:rainbow_load_separately = [
+    \ [ '*' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
+    \ [ '*.tex' , [['(', ')'], ['\[', '\]']] ],
+    \ [ '*.cpp' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
+    \ [ '*.{html,htm}' , [['(', ')'], ['\[', '\]'], ['{', '}'], ['<\a[^>]*>', '</[^>]*>']] ],
+    \ ]
+
+let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'DarkOrchid3', 'FireBrick']
+let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta']
+
+"flake8
+let g:PyFlakeOnWrite = 1
+let g:PyFlakeDisabledMessages = 'E501'
+let g:PyFlakeAggressive = 1
+
+" ale 
+" let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+" Write this in your vimrc file
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+" Check Python files with flake8 and pylint.
+let b:ale_linters = ['flake8', 'pylint']
+" Fix Python files with autopep8 and yapf.
+let b:ale_fixers = ['autopep8', 'yapf']
+let g:ale_fixers = {
+      \    'python': ['yapf', 'autopep8'],
+      \}
+
+function! LinterStatus() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+
+  return l:counts.total == 0 ? '✨ all good ✨' : printf(
+        \   '😞 %dW %dE',
+        \   all_non_errors,
+        \   all_errors
+        \)
+endfunction
+
+set statusline=
+set statusline+=%m
+set statusline+=\ %f
+set statusline+=%=
+set statusline+=\ %{LinterStatus()}
+
+" sheerun https://github.com/sheerun/vim-polyglot
+let g:indentLine_concealcursor=""
+let g:vim_json_syntax_conceal=1
