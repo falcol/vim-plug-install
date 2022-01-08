@@ -13,7 +13,7 @@ then `chmod u+x install-vimplug-scripts.sh`
 ## run   `./install-vimplug-scripts.sh`
 ## coc   
 1. sudo pacman -S nodejs npm
-2. In vim `CocInstall coc-python coc-json coc-snippets coc-explorer`
+2. In vim `CocInstall coc-python coc-json coc-snippets coc-explorer coc-tabnine`
 ## if error  
 check command `cd vim-plug-install` is in ??     
 
