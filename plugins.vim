@@ -44,6 +44,7 @@ Plug 'andviro/flake8-vim'
 Plug 'dense-analysis/ale'
 Plug 'sheerun/vim-polyglot'
 Plug 'navarasu/onedark.nvim'
+Plug 'github/copilot.vim'
 call plug#end()
 
 " path to your python
@@ -138,6 +139,8 @@ let g:lightline = {
       \ },
       \ }
 let g:lightline.colorscheme='tokyonight' "'tokyonight'
+
+
 " Theme set
 let g:tokyonight_italicize_strings=1
 let g:tokyonight_contrast_dark='hard'
@@ -146,10 +149,17 @@ let g:tokyonight_enable_bold=1
 let g:airline_theme='onedark'
 let g:onedark_termcolors=256
 " let g:tokyonight_style = 'night'
-let g:onedark_style = 'deep'
-let g:onedark_italic_comment=v:true
+let g:onedark_config = {
+  \ 'style': 'deep',
+  \ 'toggle_style_key': '<leader>ts',
+  \ 'ending_tildes': v:true,
+  \ 'diagnostics': {
+    \ 'darker': v:false,
+    \ 'background': v:false,
+  \ },
+\ }
 colorscheme onedark
-set background=light
+set background=dark
 
 set completeopt+=menuone   " show the popup menu even when there is only 1 match
 set completeopt+=noinsert  " don't insert any tet until user chooses a match
@@ -293,7 +303,7 @@ let g:neomake_python_pylint_maker = {
   \ '%-G%.%#',
   \ }
 
-let g:neomake_python_enabled_makers = ['flake8', 'pylint']
+let g:neomake_python_enabled_makers = ['pylint', 'flake8']
 let g:ale_python_pylint_change_directory=1
 let g:ale_python_flake8_change_directory=1
 let g:ale_python_pylint_executable = 'yapf'
@@ -326,7 +336,7 @@ let g:PyFlakeDisabledMessages = 'E501'
 let g:PyFlakeAggressive = 1
 
 " ale 
-" let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 " Write this in your vimrc file
@@ -335,7 +345,7 @@ let g:ale_set_quickfix = 1
 " Check Python files with flake8 and pylint.
 let b:ale_linters = ['flake8', 'pylint']
 " Fix Python files with autopep8 and yapf.
-let b:ale_fixers = ['autopep8', 'yapf']
+let b:ale_fixers = ['yapf', 'autopep8']
 let g:ale_fixers = {
       \    'python': ['yapf', 'autopep8'],
       \}
